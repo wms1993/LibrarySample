@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/LibrarySample.iml" filepath="$PROJECT_DIR$/LibrarySample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Sample/app.iml" filepath="$PROJECT_DIR$/Sample/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ToggleButtonLib/ToggleButtonLib.iml" filepath="$PROJECT_DIR$/ToggleButtonLib/ToggleButtonLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aphidFlipView/aphidFlipView.iml" filepath="$PROJECT_DIR$/aphidFlipView/aphidFlipView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pull2refresh/pull2refresh.iml" filepath="$PROJECT_DIR$/pull2refresh/pull2refresh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/social_sdk_library_project/social_sdk_library_project.iml" filepath="$PROJECT_DIR$/social_sdk_library_project/social_sdk_library_project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wmsutils/wmsutils.iml" filepath="$PROJECT_DIR$/wmsutils/wmsutils.iml" />
+    </modules>
+  </component>
+</project>
