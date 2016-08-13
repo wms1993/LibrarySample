@@ -53,6 +53,15 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    /**
+     * get item position
+     *
+     * @return position
+     */
+    public int getItemPosition() {
+        return mPosition;
+    }
+
     public <T extends View> T getView(int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {
@@ -147,6 +156,24 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         ProgressBar view = getView(viewId);
         view.setMax(max);
         view.setProgress(progress);
+        return this;
+    }
+
+    public CommonViewHolder setGone(int viewId) {
+        View view = getView(viewId);
+        view.setVisibility(View.GONE);
+        return this;
+    }
+
+    public CommonViewHolder setVisible(int viewId) {
+        View view = getView(viewId);
+        view.setVisibility(View.VISIBLE);
+        return this;
+    }
+
+    public CommonViewHolder setInVisible(int viewId) {
+        View view = getView(viewId);
+        view.setVisibility(View.INVISIBLE);
         return this;
     }
 

@@ -52,4 +52,8 @@ public abstract class MultiItemCommonAdapter<T> extends CommonAdapter<T> {
         return viewHolder.getConvertView();
     }
 
+    public void setDatas(List<T> datas) {
+        this.mDatas = datas;
+        notifyDataSetChanged();
+    }
 }

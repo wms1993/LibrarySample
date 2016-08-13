@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import com.wms.adapter.CommonViewHolder;
 
 import java.util.List;
+
 /**
  * Created by wms1993 on 2015/12/23 0023.
  */
@@ -39,4 +40,8 @@ public abstract class MultiItemCommonAdapter<T> extends CommonAdapter<T> {
         return holder;
     }
 
+    public void setDatas(List<T> datas) {
+        this.mDatas = datas;
+        notifyDataSetChanged();
+    }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.wms.adapter.CommonViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
 public abstract class CommonAdapter<T> extends RecyclerView.Adapter<CommonViewHolder> {
     protected Context mContext;
     protected int mLayoutId;
-    protected List<T> mDatas;
+    protected List<T> mDatas = new ArrayList<>();
     protected LayoutInflater mInflater;
 
     private OnItemClickListener mOnItemClickListener;
@@ -25,7 +26,10 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<CommonViewHo
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mLayoutId = layoutId;
-        mDatas = datas;
+
+        if (datas != null) {
+            mDatas = datas;
+        }
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -84,5 +88,10 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<CommonViewHo
     @Override
     public int getItemCount() {
         return mDatas.size();
+    }
+
+    public void setDatas(List<T> datas) {
+        this.mDatas = datas;
+        notifyDataSetChanged();
     }
 }

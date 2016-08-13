@@ -6,20 +6,25 @@ import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -68,7 +73,7 @@ public class CommonUtils {
      */
     public static boolean isFastDoubleClick() {
         long time = System.currentTimeMillis();
-        if (time - lastClickTime < 400) {
+        if (time - lastClickTime < ViewConfiguration.getDoubleTapTimeout()) {
             return true;
         }
         lastClickTime = time;
@@ -117,18 +122,6 @@ public class CommonUtils {
             }
         }
         return "";
-    }
-
-    /**
-     * get today's week
-     * 0 represend Sunday ...
-     *
-     * @return today's number
-     */
-    public static int getTodayOfWeek() {
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date(System.currentTimeMillis()));
-        return c.get(Calendar.DAY_OF_WEEK);
     }
 
     /**
@@ -263,6 +256,16 @@ public class CommonUtils {
     }
 
     /**
+     * check whether the list is empty
+     *
+     * @param list list
+     * @return true is empty , false is not
+     */
+    public static boolean listIsEmpty(List list) {
+        return !(list != null && !list.isEmpty());
+    }
+
+    /**
      * convert inputstream to string
      *
      * @param in inputStream
@@ -334,6 +337,130 @@ public class CommonUtils {
         if (editText != null) {
             InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * get md5 of file
+     *
+     * @param FilePath the path of file
+     * @return the md5 of file
+     */
+    public static String getFileMd5(String FilePath) {
+        char hexdigits[] =
+                {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
+                        'e', 'f'};
+        FileInputStream fis;
+        String sString;
+        char str[] = new char[16 * 2];
+        int k = 0;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            fis = new FileInputStream(FilePath);
+            byte[] buffer = new byte[2048];
+            int length = -1;
+            while ((length = fis.read(buffer)) != -1) {
+                md.update(buffer, 0, length);
+            }
+            byte[] b = md.digest();
+
+            for (int i = 0; i < 16; i++) {
+                byte byte0 = b[i];
+                str[k++] = hexdigits[byte0 >>> 4 & 0xf];
+                str[k++] = hexdigits[byte0 & 0xf];
+            }
+            fis.close();
+            sString = new String(str);
+
+            return sString;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * get weeks array
+     *
+     * @return the array contains weeks
+     */
+    public static String[] getWeeks() {
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date(System.currentTimeMillis()));
+        String dayOfWeek = String.valueOf(c.get(Calendar.DAY_OF_WEEK));
+        return new String[]{dayOfWeek};
+    }
+
+    /**
+     * get today's week
+     * 0 represend Sunday ...
+     *
+     * @return today's number
+     */
+    public static int getTodayOfWeek() {
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date(System.currentTimeMillis()));
+        return c.get(Calendar.DAY_OF_WEEK);
+    }
+
+    /**
+     * get the width and height of file
+     *
+     * @param filePath the path of file
+     * @return float array contains width and height
+     */
+    public static float[] getPicWidthAndHeight(String filePath) {
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inJustDecodeBounds = true;
+        Bitmap bitmap = BitmapFactory.decodeFile((filePath), opts);
+        // 获取到bitmap的高度和宽度
+        float[] arr = new float[2];
+        arr[0] = opts.outWidth;
+        arr[1] = opts.outHeight;
+        if (bitmap != null) {
+            bitmap.recycle();
+        }
+        return arr;
+    }
+
+    /**
+     * check whether the file is image according to suffixes
+     *
+     * @param fileName
+     * @return true is image , false is not .
+     */
+    public static boolean isImage(String fileName) {
+        String fileType = null;
+        if (fileName != null) {
+            int typeIndex = fileName.lastIndexOf(".");
+            if (typeIndex != -1) {
+                fileType = fileName.substring(typeIndex + 1).toLowerCase();
+            }
+        }
+        return fileType != null
+                && (fileType.equalsIgnoreCase("jpg") || fileType.equalsIgnoreCase("gif")
+                || fileType.equalsIgnoreCase("png") || fileType.equalsIgnoreCase("jpeg")
+                || fileType.equalsIgnoreCase("bmp") || fileType.equalsIgnoreCase("wbmp")
+                || fileType.equalsIgnoreCase("psd") || fileType.equalsIgnoreCase("cdr")
+                || fileType.equalsIgnoreCase("ico") || fileType.equalsIgnoreCase("jpe"));
+    }
+
+    /**
+     * get the name of file
+     *
+     * @param filePath filepath
+     * @return the name of file
+     */
+    public static String getFileName(String filePath) {
+        if (TextUtils.isEmpty(filePath)) {
+            return "";
+        }
+        int start = filePath.lastIndexOf("/");
+        int end = filePath.lastIndexOf(".");
+        if (start != -1 && end != -1) {
+            return filePath.substring(start + 1, end);
+        } else {
+            return "";
         }
     }
 }
