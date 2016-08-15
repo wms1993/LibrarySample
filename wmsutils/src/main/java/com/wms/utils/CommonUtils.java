@@ -1,13 +1,16 @@
 package com.wms.utils;
 
 import android.app.ActivityManager;
+import android.app.NotificationManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -25,6 +28,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -426,7 +430,6 @@ public class CommonUtils {
     /**
      * check whether the file is image according to suffixes
      *
-     * @param fileName
      * @return true is image , false is not .
      */
     public static boolean isImage(String fileName) {
@@ -462,5 +465,135 @@ public class CommonUtils {
         } else {
             return "";
         }
+    }
+
+    /**
+     * show friendly time
+     *
+     * @param date 2016-08-15 15:53:23
+     */
+    public static String friendlyTime(String date) {
+        Date time = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String ftime = "";
+        Calendar cal = Calendar.getInstance();
+
+        // 判断是否是同一天
+        String curDate = dateFormat.format(cal.getTime());
+        String paramDate = dateFormat.format(time);
+        if (curDate.equals(paramDate)) {
+            int hour = (int) ((cal.getTimeInMillis() - time.getTime()) / 3600000);
+            if (hour == 0)
+                ftime = Math.max(
+                        (cal.getTimeInMillis() - time.getTime()) / 60000, 1)
+                        + "分钟前";
+            else
+                ftime = hour + "小时前";
+            return ftime;
+        }
+
+        long lt = time.getTime() / 86400000;
+        long ct = cal.getTimeInMillis() / 86400000;
+        int days = (int) (ct - lt);
+        if (days == 0) {
+            int hour = (int) ((cal.getTimeInMillis() - time.getTime()) / 3600000);
+            if (hour == 0)
+                ftime = Math.max(
+                        (cal.getTimeInMillis() - time.getTime()) / 60000, 1)
+                        + "分钟前";
+            else
+                ftime = hour + "小时前";
+        } else if (days == 1) {
+            ftime = "昨天";
+        } else if (days == 2) {
+            ftime = "前天 ";
+        } else if (days > 2 && days < 31) {
+            ftime = days + "天前";
+        } else if (days >= 31 && days <= 2 * 31) {
+            ftime = "一个月前";
+        } else if (days > 2 * 31 && days <= 3 * 31) {
+            ftime = "2个月前";
+        } else if (days > 3 * 31 && days <= 4 * 31) {
+            ftime = "3个月前";
+        } else {
+            ftime = dateFormat.format(time);
+        }
+        return ftime;
+    }
+
+    /**
+     * get process's name
+     */
+    public static String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager mActivityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
+                .getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+
+                return appProcess.processName;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * go to install apk file
+     */
+    public static void installApk(Context context, String filePath) {
+        Uri uri = Uri.fromFile(new File(filePath));
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(uri, "application/vnd.android.package-archive");
+        context.startActivity(intent);
+    }
+
+    /**
+     * get app version code
+     */
+    public static String getAppVersionCode(Context context) {
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            return info.versionCode + "";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /**
+     * get app's package's name
+     */
+    public static String getAppPackageName(Context context) {
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            return info.packageName;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /**
+     * clear notification
+     */
+    public static void clearNotification(Context context) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+    }
+
+    /**
+     * get current time
+     */
+    public static String getNowTime(String format) {
+        Date date = new Date();
+        if (TextUtils.isEmpty(format)) {
+            format = "yyyy-MM-dd HH:mm:ss";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(date);
     }
 }

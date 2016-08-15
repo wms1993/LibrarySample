@@ -60,6 +60,9 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     }
 
     public void setDatas(List<T> datas) {
+        if (datas == null) {
+            datas = new ArrayList<>();
+        }
         this.mDatas = datas;
         notifyDataSetChanged();
     }

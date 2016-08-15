@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.wms.adapter.CommonViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,6 +54,9 @@ public abstract class MultiItemCommonAdapter<T> extends CommonAdapter<T> {
     }
 
     public void setDatas(List<T> datas) {
+        if (datas == null) {
+            datas = new ArrayList<>();
+        }
         this.mDatas = datas;
         notifyDataSetChanged();
     }
