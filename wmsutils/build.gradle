@@ -34,7 +34,7 @@ publish {
     userOrg = 'wms1993'//bintray.com用户名
     groupId = 'com.wms'//jcenter上的路径
     artifactId = 'wmsutils'//项目名称
-    publishVersion = '1.1.1'//版本号
+    publishVersion = '1.1.2'//版本号
     desc = 'this is my all utils, include baseadapter and some utils class!!!'//描述，不重要
     website = 'https://github.com/wms1993'//网站，不重要
 }

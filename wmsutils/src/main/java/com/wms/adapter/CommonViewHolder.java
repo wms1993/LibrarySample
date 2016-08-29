@@ -81,6 +81,12 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
+    public CommonViewHolder setText(int viewId, CharSequence text) {
+        TextView tv = getView(viewId);
+        tv.setText(text);
+        return this;
+    }
+
     public CommonViewHolder setImageDrawable(int viewId, Drawable drawable) {
         ImageView view = getView(viewId);
         view.setImageDrawable(drawable);
