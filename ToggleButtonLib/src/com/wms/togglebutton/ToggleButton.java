@@ -25,7 +25,7 @@ public class ToggleButton extends View {
     private float radius;
     private int onColor = Color.parseColor("#4ebb7f");
     private int offBorderColor = Color.parseColor("#dadbda");
-    private int offColor = Color.parseColor("#ffffff");
+    private int offColor = Color.parseColor("#dadbda");
     private int spotColor = Color.parseColor("#ffffff");
     private int borderColor = offBorderColor;
     private Paint paint;

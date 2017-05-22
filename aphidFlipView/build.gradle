@@ -1,26 +1,29 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'//添加
+////apply plugin: 'com.novoda.bintray-release'//添加
+//
+//apply plugin: 'com.github.dcendents.android-maven'
+//// alidili改成你的GitHub账户名
+//group = 'com.github.wms1993'
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.3'
-
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
     lintOptions {
         checkReleaseBuilds false
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
         abortOnError false
     }
-
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 23
+        targetSdkVersion 25
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+    }
+    productFlavors {
     }
 }
 

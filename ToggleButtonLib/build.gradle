@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 //apply plugin: 'com.novoda.bintray-release'//添加
+apply plugin: 'com.github.dcendents.android-maven'
+// alidili改成你的GitHub账户名
+group = 'com.github.wms1993'
 
 buildscript {
     repositories {
@@ -7,7 +10,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:3.0.0-alpha1'
     }
 }
 
@@ -16,8 +19,8 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
     lintOptions {
         checkReleaseBuilds false
         // Or, if you prefer, you can continue to check for errors in release builds,
@@ -53,6 +56,7 @@ android {
     }
     defaultConfig {
         minSdkVersion 10
+        targetSdkVersion 25
     }
     productFlavors {
     }
@@ -63,7 +67,7 @@ android {
 //    userOrg = 'wms1993'
 //    groupId = 'com.wms'
 //    artifactId = 'togglebutton'//项目名称
-//    publishVersion = '1.0.0'//版本号
+//    publishVersion = '1.0.2'//版本号
 //    desc = 'this is a toggle button like iOS!'
 //    website = 'https://github.com/wms1993'
 //}

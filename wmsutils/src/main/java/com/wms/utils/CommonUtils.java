@@ -1,5 +1,6 @@
 package com.wms.utils;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.usage.UsageStats;
@@ -34,6 +35,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -170,12 +172,17 @@ public class CommonUtils {
      * @return imei code
      */
     public static String getDeviceImei(Context context) {
-        TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String imeiCode = manager.getDeviceId();
-        if (TextUtils.isEmpty(imeiCode)) {
-            return getMacAddress(context);
+        if (context.getPackageManager().checkPermission(Manifest.permission.READ_PHONE_STATE, context.getPackageName()) == PackageManager.PERMISSION_GRANTED) {
+            TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            String imeiCode = manager.getDeviceId();
+            if (TextUtils.isEmpty(imeiCode)) {
+                return getMacAddress(context);
+            }
+
+            return imeiCode;
         }
-        return imeiCode;
+
+        return UUID.randomUUID().toString();
     }
 
     /**

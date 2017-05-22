@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/Sample/Sample.iml" filepath="$PROJECT_DIR$/Sample/Sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/ToggleButtonLib/ToggleButtonLib.iml" filepath="$PROJECT_DIR$/ToggleButtonLib/ToggleButtonLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/aphidFlipView/aphidFlipView.iml" filepath="$PROJECT_DIR$/aphidFlipView/aphidFlipView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/convenientbanner/convenientbanner.iml" filepath="$PROJECT_DIR$/convenientbanner/convenientbanner.iml" />
       <module fileurl="file://$PROJECT_DIR$/httpserver/httpserver.iml" filepath="$PROJECT_DIR$/httpserver/httpserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/pull2refresh/pull2refresh.iml" filepath="$PROJECT_DIR$/pull2refresh/pull2refresh.iml" />
       <module fileurl="file://$PROJECT_DIR$/social_sdk_library_project/social_sdk_library_project.iml" filepath="$PROJECT_DIR$/social_sdk_library_project/social_sdk_library_project.iml" />
